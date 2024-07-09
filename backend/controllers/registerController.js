@@ -5,8 +5,12 @@ const registerController = async (req,res) => {
         username: req.body.username,
         password: req.body.password
     })
-    await user.save();
-    res.json(user);
+    try {
+        await user.save();
+        res.json(user);
+    } catch (error) {
+        res.json(error);
+    }
 }
 
 module.exports = registerController;

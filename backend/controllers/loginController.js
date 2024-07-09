@@ -1,16 +1,21 @@
 const User = require("../model/User");
 const loginController = async (req,res) => {
-    const user = await User.findOne({
-        username: req.body.username
-    })
-    if(user){
-        if(user.password === req.body.password){
-            res.json("Login successfully");
+    try {
+        const user = await User.findOne({
+            username: req.body.username
+        })
+        if(user){
+            if(user.password === req.body.password){
+                res.json("Login successfully");
+                return user;
+            } else{
+                res.json("Wrong password");
+            }
         } else{
-            res.json("Wrong password");
+            res.json("Account invalid");
         }
-    } else{
-        res.json("Account invalid");
+    } catch (error) {
+        res.json(error);
     }
 }
 
